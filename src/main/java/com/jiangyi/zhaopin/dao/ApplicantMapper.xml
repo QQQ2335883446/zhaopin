@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jiangyi.zhaopin.dao.ApplicantMapper">
+    <select id="selectByName" resultType="com.jiangyi.zhaopin.model.Applicant">
+        select * from applicant where UName=#{uName} and UPwd=#{uPwd}
+    </select>
+
+    <select id="selectAll" resultType="com.jiangyi.zhaopin.model.Applicant">
+        select * from applicant where UName=#{uName}
+    </select>
+
+    <insert id="insertApp">
+        INSERT INTO `test`.`applicant` (`UName`,  `UPwd`, `UTel`, `UEmail`,  `UCity`)
+        VALUES ( #{uName},  #{uPwd}, #{uTel}, #{uEmail}, '北京');
+    </insert>
+    
+    <update id="updatauLock">
+        UPDATE `test`.`applicant` SET  `ULock`='0' WHERE (`UName`= #{uName});
+    </update>
+</mapper>

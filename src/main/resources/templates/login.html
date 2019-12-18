@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>登录</title>
+    <link href="/static/js/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <script src="/static/js/jquery-3.4.1.min.js"></script>
+    <script src="/static/js/bootstrap/js/bootstrap.js"></script>
+</head>
+<body style="background-color: #e3e3e3">
+<div class="container" style="width: 30%;margin-top: 10%">
+    <div class="form-group">
+    </div>
+    <div>
+    <h3 style="float: left">智能就业推荐系统</h3>
+    <div class="btn-group" data-toggle="buttons" style="float: right;margin-top: 10px">
+        <label class="btn btn-info active">
+            <input type="radio" name="options" value="1" id="option1" autocomplete="off" checked>求职者
+        </label>
+        <label class="btn btn-info">
+            <input type="radio" name="options" value="2" id="option2" autocomplete="off">企业
+        </label>
+    </div>
+    </div>
+    <br>
+    <br>
+    <br>
+    <br>
+    <form>
+        <div class="form-group">
+            <label for="userName">用户名:</label>
+            <input type="text" class="form-control" id="userName" placeholder="UserName">
+        </div>
+        <div class="form-group">
+            <label for="userPwd">密码:</label>
+            <input type="password" class="form-control" id="userPwd" placeholder="Password">
+        </div>
+        <span id="msg" th:text="${msg}" style="color: red"></span>
+        <br>
+        <br>
+        <button type="button" id="log" class="btn btn-primary">登录</button>
+        <a th:href="@{/reg}" class="btn btn-success">暂无账号，前往注册</a>
+    </form>
+</div>
+
+<script>
+
+        $("#userName").focus(function () {
+            $("#msg").html("");
+        })
+
+        $("#log").click(function () {
+
+            var radio = $("input:radio:checked").val();
+            var userName = $("#userName").val();
+            var userPwd = $("#userPwd").val();
+            if(userName==""||userPwd==""){
+                $("#msg").html("账号或密码不能为空！！");
+                return
+            }
+            console.log(userName)
+            //$.post('/user/login',{'uName':userName,"uPwd":userPwd});
+            if(radio==1){
+                window.location="/user/login?uName="+userName+"&uPwd="+userPwd;
+            }else
+                alert("功能暂未开发")
+
+        })
+
+
+</script>
+</body>
+</html>

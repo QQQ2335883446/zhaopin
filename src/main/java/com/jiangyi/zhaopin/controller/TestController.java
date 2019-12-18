@@ -1,6 +1,7 @@
 package com.jiangyi.zhaopin.controller;
 
 
+import com.jiangyi.zhaopin.model.Applicant;
 import com.jiangyi.zhaopin.model.Test;
 import com.jiangyi.zhaopin.service.TestService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 
@@ -17,10 +19,11 @@ public class TestController {
     TestService testService;
 
     @RequestMapping("index")
-    public ModelAndView findall() {
+    public ModelAndView findall(HttpServletRequest request) {
+        Applicant applicant = (Applicant) request.getSession().getAttribute("user");
+
         ModelAndView modelAndView = new ModelAndView();
-        List<Test> tests = testService.selectAll();
-        modelAndView.addObject("test",tests);
+        modelAndView.addObject("user",applicant);
         modelAndView.setViewName("index");
         return modelAndView;
     }

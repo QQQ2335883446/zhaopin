@@ -1,0 +1,16 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+
+</head>
+<body >
+<div >
+待激活用户名：<h4 th:text="${uName}"></h4>
+
+    <a th:href="|localhost:9090/user/activate?uName=${uName}|">点击激活</a>
+    <h5 style="color: red">跳转后如未加载页面，请手动刷新跳转后的页面！</h5>
+</div>
+
+</body>
+</html>
