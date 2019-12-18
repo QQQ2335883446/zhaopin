@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<span>出错异常：</span>
+<span th:text="${exception}"></span>
+<br>
+<span>异常Url：</span>
+<span th:text="${url}"></span>
+<h3>出现异常,请联系管理员</h3>
+<a th:href="@{/login}">点击尝试返回登录页面</a>
+</body>
+</html>
