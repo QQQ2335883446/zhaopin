@@ -7,20 +7,12 @@
     <script src="/static/js/jquery-3.4.1.min.js"></script>
     <script src="/static/js/bootstrap/js/bootstrap.js"></script>
 </head>
-<body style="background-color: #e3e3e3">
-<div class="container" style="width: 30%;margin-top: 5%">
+<body style="background-color: white">
+<div class="container" style="width: 30%;margin-top: 5%" id="user">
     <div class="form-group">
     </div>
     <div>
         <h3 style="float: left">就业推荐系统注册</h3>
-        <div class="btn-group" data-toggle="buttons" style="float: right;margin-top: 10px">
-            <label class="btn btn-info active">
-                <input type="radio" name="options" value="1" id="option1" autocomplete="off" checked>求职者
-            </label>
-            <label class="btn btn-info">
-                <input type="radio" name="options" value="2" id="option2" autocomplete="off">企业
-            </label>
-        </div>
     </div>
     <br>
     <br>
@@ -52,7 +44,26 @@
     </form>
 </div>
 
+<div class="container" style="width: 30%;margin-top: 5%" id="company" hidden>
+    haha
+</div>
 <script>
+    $("#userradio").click(function () {
+        var r =$("input:radio:checked").val()
+        if(r==1){
+            $("#user").show()
+            $("#company").hide()
+        }
+        if(r==2){
+            $("#user").hide()
+            $("#company").show()
+        }
+        }
+    )
+
+
+
+
     //锁定用户名
     $("#userName").focus()
     //清空提示
@@ -85,7 +96,7 @@
     })
     //点击注册
     $("#reg").click(function () {
-        var radio = $("input:radio:checked").val();
+
         var userName = $("#userName").val();
         var userPwd = $("#userPwd").val();
         var userEmail = $("#useremail").val();
@@ -100,7 +111,7 @@
 
         console.log(userName)
 
-        if(radio==1){
+
             $.ajax({
                 url:'user/reg',
                 data:{'uName':userName,'uPwd':userPwd,'uEmail':userEmail},
@@ -111,8 +122,7 @@
                     window.location.href = "/regsucess";
                 }
             })
-        }else
-            alert("功能暂未开发")
+
 
     })
 
