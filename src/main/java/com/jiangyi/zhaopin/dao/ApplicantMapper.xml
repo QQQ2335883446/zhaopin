@@ -10,11 +10,16 @@
     </select>
 
     <insert id="insertApp">
-        INSERT INTO `test`.`applicant` (`UName`,  `UPwd`, `UTel`, `UEmail`,  `UCity`)
-        VALUES ( #{uName},  #{uPwd}, #{uTel}, #{uEmail}, '北京');
+        INSERT INTO `test`.`applicant` (`UName`,  `UPwd`, `UTel`, `UEmail`,  `UCity` , `USex`, `UStatus`)
+        VALUES ( #{uName},  #{uPwd}, #{uTel}, #{uEmail}, '北京','男','1');
     </insert>
     
     <update id="updatauLock">
         UPDATE `test`.`applicant` SET  `ULock`='0' WHERE (`UName`= #{uName});
+    </update>
+
+    <update id="updatauser">
+   UPDATE `test`.`applicant` SET  `UTrueName`=#{uTrueName},  `UTel`=#{uTel},  `UAge`=#{uAge}, `UStatus`=#{uStatus},
+     `UCity`=#{uCity}, `USex`=#{uSex} WHERE (`UName`= #{uName})
     </update>
 </mapper>

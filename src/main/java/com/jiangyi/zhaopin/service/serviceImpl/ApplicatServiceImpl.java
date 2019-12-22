@@ -53,4 +53,13 @@ public class ApplicatServiceImpl implements ApplicatService{
     public void updatauLock(Applicant applicant) {
         applicantMapper.updatauLock(applicant);
     }
+
+    /**
+     * 更新用户详细信息
+     * @param applicant
+     */
+    @Override
+    public void updatauser(Applicant applicant) {
+        applicantMapper.updatauser(applicant);
+    }
 }

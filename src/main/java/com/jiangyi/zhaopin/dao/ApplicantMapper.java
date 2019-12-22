@@ -16,4 +16,6 @@ public interface ApplicantMapper {
     Applicant selectAll(Applicant applicant);
 
     void updatauLock(Applicant applicant);
+
+    void updatauser(Applicant applicant);
 }

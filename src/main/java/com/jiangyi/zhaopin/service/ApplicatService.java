@@ -15,4 +15,6 @@ public interface ApplicatService {
     Applicant selectAll(Applicant applicant);
 
     void updatauLock(Applicant applicant);
+
+    void updatauser(Applicant applicant);
 }

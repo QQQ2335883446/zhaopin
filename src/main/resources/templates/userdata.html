@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>推荐系统</title>
+    <link href="/static/js/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/static/css/jquery.searchableSelect.css" rel="stylesheet">
+    <script src="/static/js/jquery-3.4.1.min.js"></script>
+    <script src="/static/js/bootstrap/js/bootstrap.js"></script>
+    <script src="/static/js/jquery.searchableSelect.js"></script>
+</head>
+<body >
+<div class="container" style="width:80%;margin-top: 20px">
+    <div>
+        <h1>就业推荐系统<small>
+            个人信息维护</small></h1> <h6  id="username" th:value="${user.uName}" th:text="|在线用户：${user.uName}|"></h6>
+        <hr>
+        <nav class="navbar navbar-default">
+            <div class="container-fluid">
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                        <a class="navbar-brand" href="/user/index">首页</a>
+                </div>
+
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav">
+
+
+
+                    </ul>
+                    <form class="navbar-form navbar-left">
+                        <div class="form-group">
+                            <h5 style="color: red">重要信息，请谨慎修改！！</h5>
+                        </div>
+
+                    </form>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a href="#">Link</a></li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" th:text="|用户名：${user.uName}|"> <span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li><a th:href="@{/user/updata}">个人信息维护</a></li>
+                                <li><a href="#">简历维护</a></li>
+                                <li><a href="#">我的消息</a></li>
+                                <li role="separator" class="divider"></li>
+                                <li><a th:href="@{/user/logout}">退出登录</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div><!-- /.navbar-collapse -->
+            </div><!-- /.container-fluid -->
+        </nav>
+    </div>
+
+    <hr>
+
+
+
+
+
+    <div class="container" style="width: 60%;margin-top: 20px;margin-left: 15%">
+
+        <form >
+
+            <div class="form-group">
+                <label>用户名：<label th:text="${user.uName}"></label></label>
+            </div>
+
+
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        <label for="oldPwd">旧密码</label>
+                        <input type="password" class="form-control" id="oldPwd" placeholder="OldPassword">
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        <label for="newPwd">新密码</label>
+                        <input type="password" class="form-control" id="newPwd" placeholder="NewPassword" disabled>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                   <button id="updataPwd" style="margin-top: 25px" class="btn btn-danger" disabled>确认修改密码</button>
+                </div>
+                <div class="col-lg-2">
+                    <span id="msg" style="color: red;margin-top: 50px"></span>
+                </div>
+            </div>
+            <hr>
+            <span style="color: red">推荐重要依据，请如实填写或修改！</span>
+            <br>
+            <br>
+            <div class="row">
+
+                <div class="col-lg-3">
+                <div class="form-group">
+                    <label for="trueName">真实姓名</label>
+                    <input type="text" class="form-control" id="trueName" placeholder="暂无信息" style="width: 200px" th:value="${user.uTrueName}">
+                </div>
+                </div>
+
+                <div class="col-lg-3">
+                    <div class="form-group">
+                        <label for="userTel">联系电话</label>
+                        <input type="text" class="form-control" id="userTel" placeholder="暂无信息" style="width: 200px" th:value="${user.uTel}">
+                    </div>
+                </div>
+
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        <label for="userAge">年龄</label>
+                        <input type="text" class="form-control" id="userAge" placeholder="暂无信息" style="width: 200px" th:value="${user.uAge}">
+                    </div>
+                </div>
+
+            </div>
+
+            <br>
+
+            <div class="row">
+                <div class="col-lg-2">
+            <div class="form-group">
+                <label for="uSex">性别</label>
+                <select  class="form-control" id="uSex" th:value="${user.uSex}" style="width: 100px">
+                    <option value="男">男</option>
+                    <option value="女">女</option>
+                </select>
+            </div>
+                </div>
+                <div class="col-lg-3">
+            <div class="form-group">
+                <label for="uStatus">个人学历</label>
+            <select class="form-control" id="uStatus" th:value="${user.uStatus}" style="width: 200px">
+                <option value="初中及以下">初中及以下</option>
+                <option value="高中">高中</option>
+                <option value="大专">大专</option>
+                <option value="本科">本科</option>
+                <option value="硕士">硕士</option>
+                <option value="博士">博士</option>
+            </select>
+            </div>
+                </div>
+            </div>
+
+            <hr>
+
+            <div class="form-group">
+                <label for="uCity">所在城市</label>
+                <select id="uCity" th:value="${user.uCity}" style="width: 200px">
+                </select>
+
+            </div>
+            <hr>
+            <a style="margin-left: 70%" id="userupdata" class="btn btn-success">确认修改</a>
+        </form>
+
+
+    </div>
+</div>
+<script>
+    var s = $("#uStatus").attr("value")
+    $("#uStatus option[value="+s+"]").attr("selected","selected");
+
+    var sex = $("#uSex").attr("value")
+    $("#uSex option[value="+sex+"]").attr("selected","selected");
+
+    var city = ['北京','上海','天津','重庆','长沙','长春','成都','福州','广州','贵阳','呼和浩特','哈尔滨','合肥','杭州','海口','济南','昆明','拉萨','兰州','南宁','南京','南昌','沈阳','石家庄','太原','乌鲁木齐南','武汉','西宁','西安','银川','郑州','深圳','厦门']
+    var str = ''
+    for(var i=0;i<city.length;i++){
+        str += '<option value='+city[i]+'>'+city[i]+'</option>'
+    }
+    $("#uCity").append(str)
+
+    var c = $("#uCity").attr("value")
+    $("#uCity option[value="+c+"]").attr("selected","selected");
+
+    $(function(){
+        $("#uCity").searchableSelect();
+    });
+
+    $("#updataPwd").click(function () {
+
+    })
+
+    $("#oldPwd").blur(function () {
+        var uName = $("#username").attr("value")
+        var oldpwd = $("#oldPwd").val()
+        $.ajax({
+            url:"/user/ColdPwd",
+            data:{'uName':uName,'uPwd':oldpwd},
+            dataType:"json",
+            type:'post',
+            success:function (data) {
+                if(data==false){
+                    $("#msg").html('原密码错误！！')
+                    $("#newPwd").attr("disabled","disabled")
+                }
+                if(data==true){
+                    $("#msg").html('')
+                    $("#newPwd").removeAttr("disabled")
+                }
+            }
+        })
+    })
+    $("#newPwd").blur(function () {
+        var newpwd = $("#newPwd").val()
+        if(newpwd!=''){
+            $("#updataPwd").removeAttr("disabled")
+        }else {
+            $("#updataPwd").attr("disabled","disabled")
+        }
+    })
+
+    $("#userupdata").click(function () {
+        var usertruename = $("#trueName").val()
+        var usertel = $("#userTel").val()
+        var userage = $("#userAge").val()
+        var usersex = $("#uSex option:selected").val()
+        var userstatus = $("#uStatus option:selected").val()
+        var usercity = $("#uCity option:selected").val()
+        var useranme = $("#username").attr("value")
+        $.ajax({
+            url:'/user/updatauser',
+            data:{'uName':useranme,'uTrueName':usertruename,'uTel':usertel,'uAge':userage,'uSex':usersex,'uStatus':userstatus,'uCity':usercity},
+            type:'post',
+            datatype:'json',
+            success:function (data) {
+                window.location.reload()
+            }
+        })
+
+    })
+
+
+</script>
+</body>
+</html>

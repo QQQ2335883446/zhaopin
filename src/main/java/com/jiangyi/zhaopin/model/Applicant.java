@@ -10,6 +10,8 @@ public class Applicant {
     private String uPwd;
     private String uTel;
     private String uEmail;
+    //默认 男
+    private String uSex;
     private String uAge;
     private String uStatus;
     private String uBirth;
@@ -17,6 +19,14 @@ public class Applicant {
     private String uCity;
     //激活状态，默认-1
     private Integer uLock;
+
+    public String getuSex() {
+        return uSex;
+    }
+
+    public void setuSex(String uSex) {
+        this.uSex = uSex;
+    }
 
     public String getuId() {
         return uId;

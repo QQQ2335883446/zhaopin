@@ -61,6 +61,91 @@ public class ApplicatController {
         modelAndView.setViewName("redirect:/index");
         return modelAndView;
     }
+    /**
+     * 修改密码
+     * 判断旧密码
+     * @param applicant
+     * @param request
+     * @return
+     */
+    @RequestMapping("user/ColdPwd")
+    public boolean ColdPwd(Applicant applicant, HttpServletRequest request){
+        //解密
+        applicant.setuPwd(md5.MD5Encode(applicant.getuPwd(),"utf-8"));
+        Applicant user = applicatService.selectByName(applicant);
+        if(user==null){
+            return false;
+        }
+       return true;
+    }
+
+    /**
+     * 更新信息
+     * @param applicant
+     * @param request
+     * @return
+     */
+    @RequestMapping("user/updatauser")
+    public boolean updatauser(Applicant applicant, HttpServletRequest request){
+        applicatService.updatauser(applicant);
+        return true;
+    }
+    /**
+     * 更新信息
+     * @param applicant
+     * @param request
+     * @return
+     */
+    @RequestMapping("user/index")
+    public ModelAndView userindex(Applicant applicant, HttpServletRequest request){
+        Applicant user = (Applicant) request.getSession().getAttribute("user");
+        Applicant user2 = applicatService.selectAll(user);
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("user",user2);
+        modelAndView.setViewName("/index");
+        return modelAndView;
+    }
+    /**
+     * 修改用户信息页面
+     * @param request
+     * @return
+     */
+    @RequestMapping("user/updata")
+    public ModelAndView updata(HttpServletRequest request){
+        Applicant user = (Applicant) request.getSession().getAttribute("user");
+        Applicant user1 = applicatService.selectAll(user);
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("user",user1);
+        modelAndView.setViewName("userdata");
+        return modelAndView;
+    }
+
+    /**
+     * 简历页面
+     * @param request
+     * @return
+     */
+    @RequestMapping("user/resume")
+    public ModelAndView resume(HttpServletRequest request){
+        Applicant user = (Applicant) request.getSession().getAttribute("user");
+        Applicant user1 = applicatService.selectAll(user);
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("user",user1);
+        modelAndView.setViewName("resume");
+        return modelAndView;
+    }
+    /**
+     * 退出登录
+     * @param request
+     * @return
+     */
+    @RequestMapping("user/logout")
+    public ModelAndView logout(HttpServletRequest request){
+        request.getSession().removeAttribute("user");
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("login");
+        return modelAndView;
+    }
 
     /**
      * 用户注册

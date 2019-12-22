@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>推荐系统</title>
+    <link href="/static/js/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/static/css/jquery.searchableSelect.css" rel="stylesheet">
+    <script src="/static/js/jquery-3.4.1.min.js"></script>
+    <script src="/static/js/bootstrap/js/bootstrap.js"></script>
+    <script src="/static/js/jquery.searchableSelect.js"></script>
+    <style>
+        .tit{
+            margin-top: -10px;
+            margin-left: 60px;
+            font-style: normal;
+            color: dimgray;
+
+        }
+
+    </style>
+</head>
+<body >
+<div class="container" style="width:80%;margin-top: 20px;margin-bottom: 20px">
+    <div>
+        <h1>就业推荐系统<small>
+            简历维护</small></h1> <h6  id="username" th:value="${user.uName}" th:text="|在线用户：${user.uName}|"></h6>
+        <hr>
+        <nav class="navbar navbar-default">
+            <div class="container-fluid">
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="/user/index">首页</a>
+                </div>
+
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav">
+
+
+
+                    </ul>
+                    <form class="navbar-form navbar-left">
+                        <div class="form-group">
+                            <h5 style="color: red">个人简历模板，基本信息请前往个人信息维护处修改，其他信息点击即可修改</h5>
+                        </div>
+
+                    </form>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a href="#">Link</a></li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" th:text="|用户名：${user.uName}|"> <span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li><a th:href="@{/user/updata}">个人信息维护</a></li>
+                                <li><a href="#">简历维护</a></li>
+                                <li><a href="#">我的消息</a></li>
+                                <li role="separator" class="divider"></li>
+                                <li><a th:href="@{/user/logout}">退出登录</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div><!-- /.navbar-collapse -->
+            </div><!-- /.container-fluid -->
+        </nav>
+    </div>
+
+    <hr>
+
+
+    <div class="container" style="width: 70%;margin-top: 20px;border:solid 2px">
+
+        <form >
+            <div class="row">
+                <div class="col-lg-8">
+                     <div class="form-group" style="margin-top: 60px;margin-left: 100px">
+                         <h1 th:text="${user.uTrueName}"></h1>
+                         <h4 style="margin-left: 90px;font-weight: 1000;margin-top: 20px">求职意向:</h4>
+                         <h4 style="margin-left: 90px;font-weight: 1000">期望薪资:</h4>
+                    </div>
+                </div>
+
+                <div class="col-lg-4">
+                    <div class="form-group" style="margin-top: 90px;margin-left: 60px">
+                        <h1 ><strong>个人简历</strong></h1>
+                        <h2 >Resume</h2>
+                    </div>
+                </div>
+
+            </div>
+
+            <hr  style="height:3px;border:none;border-top:3px double;margin-top: 30px">
+            <div class="row">
+                <div class="col-lg-2" >
+                    <h4 class="tit">基本信息</h4>
+                </div>
+                <div class="col-lg-4">
+                    <h4 ><strong th:text="|性别:${user.uSex}|"></strong></h4>
+                </div>
+                <div class="col-lg-4">
+                    <h4 ><strong th:text="|现居地:${user.uCity}|"></strong></h4>
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col-lg-2" >
+                </div>
+                <div class="col-lg-4">
+                    <h4 ><strong th:text="|联系电话:${user.uTel}|"></strong></h4>
+                </div>
+                <div class="col-lg-4">
+                    <h4 ><strong th:text="|年龄:${user.uAge}|"></strong></h4>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-2" >
+                </div>
+                <div class="col-lg-4">
+                    <h4 ><strong th:text="|邮箱:${user.uEmail}|"></strong></h4>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-2" >
+                </div>
+                <div class="col-lg-4">
+                    <h4 ><strong th:text="|学历:${user.uStatus}|"></strong></h4>
+                </div>
+
+
+            </div>
+            <hr style="height:1px;border:none;border-top:1px dashed;">
+
+            <div class="row" id="skill">
+                <div class="col-lg-2" >
+                    <h4 class="tit">专业技能</h4>
+                </div>
+                <div class="col-lg-6" >
+                <span>良好的Java基础，熟悉常用的数据结构，熟悉Web编程<br>
+                      掌握SSM、SpringBoot等技术框架下的Web开发<br>
+                      熟悉使用CSS、Bootstrap、JavaScript、Ajax和Jquery等前端技术框架<br>
+                      了解Maven、Git版本控制工具，Postman测试工具<br>
+                      了解Mysql，Redis数据库，会编写简单的SQL语句<br>
+                      熟悉应用服务器Tomcat，了解Nginx</span>
+                </div>
+                <div class="col-lg-2" id="cs" hidden="hidden">
+                    <button type="button" class="btn btn-danger btn-lg" data-toggle="modal" data-target="#myModal">
+                        修改技能
+                    </button>
+
+                </div>
+            </div>
+
+            <hr style="height:1px;border:none;border-top:1px dashed;">
+            <div class="row" id="exp">
+                <div class="col-lg-2" >
+                    <h4 class="tit">项目经历</h4>
+                </div>
+                <div class="col-lg-6" >
+                <span>良好的Java基础，熟悉常用的数据结构，熟悉Web编程<br>
+                      掌握SSM、SpringBoot等技术框架下的Web开发<br>
+                      熟悉使用CSS、Bootstrap、JavaScript、Ajax和Jquery等前端技术框架<br>
+                      了解Maven、Git版本控制工具，Postman测试工具<br>
+                      了解Mysql，Redis数据库，会编写简单的SQL语句<br>
+                      熟悉应用服务器Tomcat，了解Nginx</span>
+                </div>
+                <div class="col-lg-2" id="ce" hidden="hidden">
+                    <button type="button" class="btn btn-danger btn-lg" data-toggle="modal" data-target="#myModal">
+                        修改技能
+                    </button>
+
+                </div>
+            </div>
+
+
+
+            <hr style="height:1px;border:none;border-top:1px dashed;">
+            <div class="row" id="exp">
+                <div class="col-lg-2" >
+                    <h4 class="tit">自我评价</h4>
+                </div>
+                <div class="col-lg-6" >
+                <span>良好的Java基础，熟悉常用的数据结构，熟悉Web编程<br>
+                      掌握SSM、SpringBoot等技术框架下的Web开发<br>
+                      熟悉使用CSS、Bootstrap、JavaScript、Ajax和Jquery等前端技术框架<br>
+                      了解Maven、Git版本控制工具，Postman测试工具<br>
+                      了解Mysql，Redis数据库，会编写简单的SQL语句<br>
+                      熟悉应用服务器Tomcat，了解Nginx</span>
+                </div>
+                <div class="col-lg-2" id="ce" hidden="hidden">
+                    <button type="button" class="btn btn-danger btn-lg" data-toggle="modal" data-target="#myModal">
+                        修改技能
+                    </button>
+
+                </div>
+            </div>
+
+            <hr  style="height:3px;border:none;border-top:3px double;margin-top: 30px">
+
+        </form>
+
+        <!-- Button trigger modal -->
+
+        <!-- Modal -->
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+                    </div>
+                    <div class="modal-body">
+                        ...
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary">Save changes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+</div>
+<script>
+$("#skill").click(function () {
+    $("#cs").show()
+})
+</script>
+</body>
+</html>
