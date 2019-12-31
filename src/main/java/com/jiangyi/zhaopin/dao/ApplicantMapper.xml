@@ -9,17 +9,36 @@
         select * from applicant where UName=#{uName}
     </select>
 
+    <select id="selectlist" resultType="com.jiangyi.zhaopin.model.Applicant">
+        select * from applicant
+    </select>
+
+
+    <select id="select" resultType="com.jiangyi.zhaopin.model.Applicant">
+        select * from applicant where UName != #{uName}
+    </select>
+
+
+    <select id="selectByuId" resultType="com.jiangyi.zhaopin.model.Applicant">
+        select * from applicant where UId=#{uId}
+    </select>
+
     <insert id="insertApp">
-        INSERT INTO `test`.`applicant` (`UName`,  `UPwd`, `UTel`, `UEmail`,  `UCity` , `USex`, `UStatus`)
+        INSERT INTO applicant (`UName`,  `UPwd`, `UTel`, `UEmail`,  `UCity` , `USex`, `UStatus`)
         VALUES ( #{uName},  #{uPwd}, #{uTel}, #{uEmail}, '北京','男','1');
     </insert>
     
     <update id="updatauLock">
-        UPDATE `test`.`applicant` SET  `ULock`='0' WHERE (`UName`= #{uName});
+        UPDATE applicant SET  `ULock`='0' WHERE (`UName`= #{uName});
+    </update>
+
+    <update id="updataskill">
+        UPDATE applicant SET USkill=#{uSkill},UExp=#{uExp},UEva=#{uEva}  WHERE (`UName`= #{uName});
     </update>
 
     <update id="updatauser">
-   UPDATE `test`.`applicant` SET  `UTrueName`=#{uTrueName},  `UTel`=#{uTel},  `UAge`=#{uAge}, `UStatus`=#{uStatus},
-     `UCity`=#{uCity}, `USex`=#{uSex} WHERE (`UName`= #{uName})
+   UPDATE applicant SET  `UTrueName`=#{uTrueName},  `UTel`=#{uTel},  `UAge`=#{uAge}, `UStatus`=#{uStatus},
+     `UCity`=#{uCity}, `USex`=#{uSex} ,USalary=#{uSalary},UJob = #{uJob} WHERE (`UName`= #{uName})
     </update>
+
 </mapper>

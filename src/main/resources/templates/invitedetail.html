@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>推荐系统</title>
+    <link href="/static/js/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/static/css/jquery.searchableSelect.css" rel="stylesheet">
+    <script src="/static/js/jquery-3.4.1.min.js"></script>
+    <script src="/static/js/bootstrap/js/bootstrap.js"></script>
+    <script src="/static/js/jquery.searchableSelect.js"></script>
+</head>
+<body >
+<div class="container" style="width:80%;margin-top: 20px">
+    <div>
+        <h1>就业推荐系统<small>
+            招聘信息详情</small></h1> <h6  id="username" th:uId="${user.uId}" th:uTrueName="${user.uTrueName}" th:uStatus="${user.uStatus}" th:uTel="${user.uTel}"   th:value="${user.uName}" th:text="|在线用户：${user.uName}|"></h6>
+        <hr>
+        <nav class="navbar navbar-default">
+            <div class="container-fluid">
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="/user/index">首页</a>
+                </div>
+
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav">
+
+
+
+                    </ul>
+                    <form class="navbar-form navbar-left">
+                        <div class="form-group">
+                            <h5 style="color: red">职位详细信息！！</h5>
+                        </div>
+
+                    </form>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a href="#">Link</a></li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" th:text="|用户名：${user.uName}|"> <span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li><a th:href="@{/user/updata}">个人信息维护</a></li>
+                                <li><a th:href="@{/user/resume}">简历维护</a></li>
+                                <li><a th:href="@{/user/usersends}">我的消息</a></li>
+                                <li role="separator" class="divider"></li>
+                                <li><a th:href="@{/user/logout}">退出登录</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div><!-- /.navbar-collapse -->
+            </div><!-- /.container-fluid -->
+        </nav>
+    </div>
+
+    <hr>
+
+    <div class="container" style="width: 60%;margin-top: 20px;margin-left: 15%">
+            <div class="alert" id="alert" hidden="hidden"></div>
+            <div class="row">
+                <div class="col-lg-8">
+                        <h3>招聘中：<label th:text="${invite.iName}"></label></h3>
+                </div>
+                <div class="col-lg-2">
+                   <button style="margin-top: 20px" class="btn btn-info" id="send"
+                           th:iId="${invite.iId}" th:cId="${invite.cId}" th:iName="${invite.iName}" th:iMoney="${invite.iMoney}" th:cName="${invite.cName}"
+                   >投递简历</button>
+                </div>
+            </div>
+
+        <div class="row">
+            <div class="col-lg-1">
+                <h4 style="color: #ff8908"><label th:text="${invite.iMoney}"></label></h4>
+            </div>
+
+            <div class="col-lg-1">
+                <h5><label th:text="${invite.iCity}"></label></h5>
+            </div>
+            <div class="col-lg-1">
+                <h5><label th:text="${invite.iStatus}"></label></h5>
+            </div>
+        </div>
+    <hr>
+        <span><strong>职位要求</strong></span><br>
+        <span th:text="${invite.iIntro}"></span><br><br>
+        <span><strong>公司介绍</strong></span><br>
+        <span th:text="${com.cIntro}"></span><br><br>
+        <span><strong>工商信息</strong></span><br>
+        <div class="row">
+            <div class="col-lg-2">
+                <h5><label style="color: #adadad">法人代表:</label><label th:text="${com.cbName}"></label></h5>
+            </div>
+            <div class="col-lg-2">
+                <h5><label style="color: #adadad">所在城市:</label><label th:text="${com.cCity}"></label></h5>
+            </div>
+            <div class="col-lg-3">
+                <h5><label style="color: #adadad">企业类型:</label><label th:text="${com.cType}"></label></h5>
+            </div>
+            <div class="col-lg-2">
+                <h5><label style="color: #adadad">企业规模:</label><label th:text="${com.cScale}"></label></h5>
+            </div>
+        </div><br>
+        <span><strong>联系公司</strong></span><br>
+        <div class="row">
+            <div class="col-lg-5">
+                <h5><label style="color: #adadad">地址:</label><label th:text="${com.cAdress}"></label></h5>
+            </div>
+            <div class="col-lg-2">
+                <h5><label style="color: #adadad">电话:</label><label th:text="${com.cTel}"></label></h5>
+            </div>
+        </div><br>
+    </div>
+</div>
+<script>
+    $("#send").click(function () {
+        var iId = $(this).attr('iId');
+        var uId = $("#username").attr("uId");
+        var cId = $(this).attr('cId');
+        var iName = $(this).attr('iName');
+        var iMoney = $(this).attr('iMoney');
+        var cName = $(this).attr('cName');
+        var uTrueName = $("#username").attr('uTrueName');
+        var uStatus = $("#username").attr('uStatus');
+        var uTel = $("#username").attr('uTel');
+        console.log(iId+uId+cId)
+        console.log(cName)
+        $.ajax({
+            url:"/user/addsend",
+            data:{"iId":iId,"uId":uId,"cId":cId,"iName":iName,"iMoney":iMoney,"cName":cName,"uTrueName":uTrueName,"uStatus":uStatus,"uTel":uTel},
+            dataType:'json',
+            type:'post',
+            success:function (data) {
+                console.log(data)
+            }
+        })
+    })
+
+    $("#send").click(function () {
+        $("#alert").html("投递成功！！").addClass("alert-warning").show().delay(1000).fadeOut();
+    })
+</script>
+</body>
+</html>

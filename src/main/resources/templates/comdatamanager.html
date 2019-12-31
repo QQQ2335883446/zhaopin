@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>推荐系统</title>
+    <script src="/static/js/jquery-3.4.1.min.js"></script>
+    <link href="/static/js/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/static/css/jquery.searchableSelect.css" rel="stylesheet">
+    <script src="/static/js/bootstrap/js/bootstrap.js"></script>
+    <script src="/static/js/jquery.searchableSelect.js"></script>
+</head>
+<body >
+<div class="container" style="width:90%;margin-top: 20px">
+    <div class="row">
+        <div class="col-lg-3"><h4><strong>企业名称：<span id="cName" th:value="${com.cName}" th:text="${com.cName}"></span></strong></h4></div>
+        <div class="col-lg-2"><h4><small><span th:text="|企业类型：${com.cType}|"></span></small></h4></div>
+        <div class="col-lg-2"><h4><small><span th:text="|所在城市：${com.cCity}|"></span></small></h4></div>
+    </div>
+    <br>
+    <span><strong style="color: red">企业信息设置</strong></span>
+    <hr>
+    <div class="row">
+        <div class="col-lg-2"><h4><small>
+            法人代表：<input class="form-control" id="cbName" th:value="${com.cbName}" placeholder="暂无信息">
+        </small></h4></div>
+        <div class="col-lg-2"><h4><small>
+            企业电话：<input class="form-control" id="cTel" th:value="${com.cTel}" placeholder="暂无信息">
+        </small></h4></div>
+        <div class="col-lg-2"><h4><small>
+            企业详细地址：
+            <input class="form-control" id="cAdress" th:value="${com.cAdress}" placeholder="暂无信息">
+        </small></h4></div>
+        <div class="col-lg-2"><h4><small>
+            企业规模：
+            <select class="form-control" id="cscale" th:value="${com.cScale}">
+                <option value="民营">民营</option>
+                <option value="国有企业">国有企业</option>
+                <option value="外资">外资</option>
+                <option value="合资">合资</option>
+            </select>
+        </small></h4></div>
+    </div>
+    <h4><small>企业介绍：</small></h4>
+    <textarea rows="15" cols="100" id="cintro">
+        <th:block  th:text="${com.cIntro}"></th:block>
+    </textarea>
+    <br>
+    <br>
+    <button class="btn btn-success" id="updata">点击保存修改</button>
+
+</div>
+<script>
+    var s = $("#cscale").attr("value")
+    console.log(s)
+    $("#cscale option[value="+s+"]").attr("selected","selected");
+
+    $("#updata").click(function () {
+        var cName = $("#cName").attr('value');
+        var cbName = $("#cbName").val();
+        var cTel = $("#cTel").val();
+        var cAdress = $("#cAdress").val();
+        var cScale = $("#cscale option:selected").val();
+        var cIntro = $("#cintro").val();
+        $.ajax({
+            url:"/com/updatacom",
+            type:"post",
+            dataType:'json',
+            data:{"cName":cName,"cbName":cbName,"cTel":cTel,
+            "cAdress":cAdress,"cScale":cScale,"cIntro":cIntro},
+            success:function (data) {
+                console.log(data)
+                window.location.reload()
+            }
+        })
+    })
+</script>
+</body>
+</html>

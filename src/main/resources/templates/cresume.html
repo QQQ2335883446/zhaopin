@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>简历</title>
+    <link href="/static/js/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/static/css/jquery.searchableSelect.css" rel="stylesheet">
+    <script src="/static/js/jquery-3.4.1.min.js"></script>
+    <script src="/static/js/bootstrap/js/bootstrap.js"></script>
+    <script src="/static/js/jquery.searchableSelect.js"></script>
+    <style>
+        .tit{
+            margin-top: -20px;
+            margin-left: 60px;
+            font-style: normal;
+            color: dimgray;
+            width: 100px;
+
+        }
+
+    </style>
+</head>
+<body >
+<div class="container" style="width:100%;margin-top: 20px;margin-bottom: 20px">
+
+    <div class="container" style="width: 70%;margin-top: 20px;margin-left:0px;border:solid 2px">
+
+        <form >
+            <div class="row">
+                <div class="col-lg-8">
+                    <div class="form-group" style="margin-top: 60px;margin-left: 100px">
+                        <h1 th:text="${user.uTrueName}"></h1>
+                        <h4 style="margin-left: 90px;font-weight: 1000;margin-top: 20px" th:text="|求职意向:${user.uJob}|"></h4>
+                        <h4 style="margin-left: 90px;font-weight: 1000" th:text="|期望薪资:${user.uSalary}|"></h4>
+                    </div>
+                </div>
+
+                <div class="col-lg-4">
+                    <div class="form-group" style="margin-top: 90px;margin-left: 60px">
+                        <h1 ><strong>个人简历</strong></h1>
+                        <h2 >Resume</h2>
+                    </div>
+                </div>
+
+            </div>
+
+            <hr  style="height:3px;border:none;border-top:3px double;margin-top: 30px">
+            <div class="row">
+                <div class="col-lg-2" >
+                    <h4 class="tit">基本信息</h4>
+                </div>
+                <div class="col-lg-4">
+                    <h4 ><strong th:text="|性别:${user.uSex}|"></strong></h4>
+                </div>
+                <div class="col-lg-4">
+                    <h4 ><strong th:text="|现居地:${user.uCity}|"></strong></h4>
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col-lg-2" >
+                </div>
+                <div class="col-lg-4">
+                    <h4 ><strong th:text="|联系电话:${user.uTel}|"></strong></h4>
+                </div>
+                <div class="col-lg-4">
+                    <h4 ><strong th:text="|年龄:${user.uAge}|"></strong></h4>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-2" >
+                </div>
+                <div class="col-lg-4">
+                    <h4 ><strong th:text="|邮箱:${user.uEmail}|"></strong></h4>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-2" >
+                </div>
+                <div class="col-lg-4">
+                    <h4 ><strong th:text="|学历:${user.uStatus}|"></strong></h4>
+                </div>
+
+
+            </div>
+            <hr style="height:1px;border:none;border-top:1px dashed;">
+
+            <div class="row" id="skill">
+                <div class="col-lg-2" >
+                    <h4 class="tit">专业技能</h4>
+                </div>
+                <div class="col-lg-8" >
+                    <h5 th:text="${user.uSkill}"></h5>
+                </div>
+
+            </div>
+
+            <hr style="height:1px;border:none;border-top:1px dashed;">
+            <div class="row" id="exp">
+                <div class="col-lg-2" >
+                    <h4 class="tit">项目经历</h4>
+
+                </div>
+                <div class="col-lg-8" >
+                    <span id="expc" th:text="${user.uExp}">
+                    </span>
+                </div>
+
+            </div>
+
+            <hr style="height:1px;border:none;border-top:1px dashed;">
+            <div class="row" id="eva">
+                <div class="col-lg-2" >
+                    <h4 class="tit">自我评价</h4>
+                </div>
+                <div class="col-lg-8"  >
+                    <span id="evac"  th:text="${user.uEva}">
+                    </span>
+                </div>
+
+            </div>
+
+            <hr  style="height:3px;border:none;border-top:3px double;margin-top: 30px">
+
+        </form>
+
+</div>
+</div>
+<script>
+
+</script>
+</body>
+</html>

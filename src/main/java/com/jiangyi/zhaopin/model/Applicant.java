@@ -4,7 +4,7 @@ package com.jiangyi.zhaopin.model;
  * 求职者实体类
  */
 public class Applicant {
-    private String uId;
+    private Integer uId;
     private String uName;
     private String uTrueName;
     private String uPwd;
@@ -20,6 +20,56 @@ public class Applicant {
     //激活状态，默认-1
     private Integer uLock;
 
+    private String uSkill;
+
+    private String uExp;
+
+    private String uEva;
+
+    private String uSalary;
+
+    private String uJob;
+
+    public String getuSalary() {
+        return uSalary;
+    }
+
+    public void setuSalary(String uSalary) {
+        this.uSalary = uSalary;
+    }
+
+    public String getuJob() {
+        return uJob;
+    }
+
+    public void setuJob(String uJob) {
+        this.uJob = uJob;
+    }
+
+    public String getuSkill() {
+        return uSkill;
+    }
+
+    public void setuSkill(String uSkill) {
+        this.uSkill = uSkill;
+    }
+
+    public String getuExp() {
+        return uExp;
+    }
+
+    public void setuExp(String uExp) {
+        this.uExp = uExp;
+    }
+
+    public String getuEva() {
+        return uEva;
+    }
+
+    public void setuEva(String uEva) {
+        this.uEva = uEva;
+    }
+
     public String getuSex() {
         return uSex;
     }
@@ -28,11 +78,11 @@ public class Applicant {
         this.uSex = uSex;
     }
 
-    public String getuId() {
+    public Integer getuId() {
         return uId;
     }
 
-    public void setuId(String uId) {
+    public void setuId(Integer uId) {
         this.uId = uId;
     }
 

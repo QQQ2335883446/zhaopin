@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jiangyi.zhaopin.dao.InviteMapper">
+
+    <select id="selectAllByCID" resultType="com.jiangyi.zhaopin.model.Invite">
+        select * from invite where CId=#{cId}
+    </select>
+
+    <select id="selectByIId" resultType="com.jiangyi.zhaopin.model.Invite">
+        select * from invite where IId=#{iId}
+    </select>
+
+    <select id="selectAll" resultType="com.jiangyi.zhaopin.model.Invite">
+        select * from invite
+    </select>
+
+    <select id="selectlike" resultType="com.jiangyi.zhaopin.model.Invite">
+        SELECT * FROM invite WHERE IName LIKE concat('%',#{iName},'%');
+    </select>
+
+    <delete id="deleteById">
+        DELETE from invite WHERE IId = #{iId}
+    </delete>
+
+    <insert id="insert">
+        INSERT INTO invite (`CId`, `IName`, `IMoney`, `ICity`, `IStatus`, `IIntro`, `CName`) VALUES ( #{cId}, #{iName}, #{iMoney}, #{iCity}, #{iStatus},
+      #{iIntro}, #{cName});
+    </insert>
+    
+    <update id="updata">
+        UPDATE invite SET  `IName`= #{iName}, `IMoney`= #{iMoney}, `ICity`=#{iCity}, `IStatus`=#{iStatus},
+         `IIntro`= #{iIntro}  WHERE (`IId`=#{iId});
+
+    </update>
+</mapper>

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>推荐系统</title>
+    <script src="/static/js/jquery-3.4.1.min.js"></script>
+    <link href="/static/js/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/static/css/jquery.searchableSelect.css" rel="stylesheet">
+    <script src="/static/js/bootstrap/js/bootstrap.js"></script>
+    <script src="/static/js/jquery.searchableSelect.js"></script>
+</head>
+<body >
+<div class="container" style="width:90%;margin-top: 20px">
+    <div class="row">
+        <div class="col-lg-3"><h4><strong>企业名称：<span id="cName" th:value="${com.cName}" th:text="${com.cName}"></span></strong></h4></div>
+        <div class="col-lg-2"><h4><small><span th:text="|企业类型：${com.cType}|"></span></small></h4></div>
+        <div class="col-lg-2"><h4><small><span th:text="|所在城市：${com.cCity}|"></span></small></h4></div>
+    </div>
+    <br>
+    <span><strong style="color: red">简历管理</strong></span>
+    <hr>
+    <div class="container" style="width: 80%;margin-left: 0px">
+        <div class="alert" id="alert" hidden="hidden"></div>
+        <table class="table table">
+            <tr>
+                <td>投递人</td>
+                <td>学历</td>
+                <td>投递职位</td>
+                <td>职位薪资</td>
+                <td>时间</td>
+                <td>状态</td>
+                <td>操作</td>
+            </tr>
+            <tr th:each="sends,iterStat:${sends}">
+                <td th:text="${sends.uTrueName}"></td>
+                <td th:text="${sends.uStatus}"></td>
+                <td th:text="${sends.iName}"></td>
+                <td th:text="${sends.iMoney}"></td>
+                <td th:text="${sends.sTime}"></td>
+                <td th:switch="${sends.sStatus}">
+                    <span th:case="已投递" style="color: #162bff">已接收</span>
+                    <span th:case="拒绝" style="color: red">拒绝</span>
+                    <span th:case="接受" style="color: #ffbb00">考虑联系</span>
+                </td>
+                <td>
+                    <button  target="main" class="btn"  th:value="${sends.uId}">查看简历</button>
+                    <button  class="btn btn-danger" th:sId="${sends.sId}">直接拒绝</button>
+                    <button  class="btn btn-success" th:sId="${sends.sId}">可以考虑</button>
+                </td>
+
+
+            </tr>
+        </table>
+    </div>
+
+</div>
+<script>
+    $("button[class='btn']").click(function () {
+        var uId = $(this).attr("value");
+        console.log(uId)
+        window.location.href="/com/resume?uId="+uId
+    })
+    $("button[class='btn btn-danger']").click(function () {
+        var sId = $(this).attr("sId");
+        $.post("/com/updatasends",{"sId":sId,"sStatus":"拒绝"},"json")
+        window.location.reload()
+    })
+    $("button[class='btn btn-success']").click(function () {
+        var sId = $(this).attr("sId");
+        $.post("/com/updatasends",{"sId":sId,"sStatus":"接受"},"json")
+        window.location.reload()
+    })
+</script>
+</body>
+</html>

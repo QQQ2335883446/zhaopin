@@ -6,6 +6,8 @@ import com.jiangyi.zhaopin.service.ApplicatService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * 求职者服务层
  */
@@ -61,5 +63,30 @@ public class ApplicatServiceImpl implements ApplicatService{
     @Override
     public void updatauser(Applicant applicant) {
         applicantMapper.updatauser(applicant);
+    }
+
+    /**
+     * 更新用户的简历模板
+     * @param applicant
+     */
+    @Override
+    public void updataskill(Applicant applicant) {
+        applicantMapper.updataskill(applicant);
+    }
+
+    @Override
+    public Applicant selectByuId(Integer uId) {
+        return applicantMapper.selectByuId(uId);
+    }
+
+    @Override
+    public List<Applicant> select(Applicant applicant) {
+        List<Applicant> select = applicantMapper.select(applicant);
+        return select;
+    }
+
+    @Override
+    public List<Applicant> selectlist() {
+        return applicantMapper.selectlist();
     }
 }

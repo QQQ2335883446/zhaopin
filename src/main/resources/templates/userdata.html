@@ -47,8 +47,8 @@
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" th:text="|用户名：${user.uName}|"> <span class="caret"></span></a>
                             <ul class="dropdown-menu">
                                 <li><a th:href="@{/user/updata}">个人信息维护</a></li>
-                                <li><a href="#">简历维护</a></li>
-                                <li><a href="#">我的消息</a></li>
+                                <li><a th:href="@{/user/resume}">简历维护</a></li>
+                                <li><a th:href="@{/user/usersends}">我的消息</a></li>
                                 <li role="separator" class="divider"></li>
                                 <li><a th:href="@{/user/logout}">退出登录</a></li>
                             </ul>
@@ -66,7 +66,7 @@
 
 
     <div class="container" style="width: 60%;margin-top: 20px;margin-left: 15%">
-
+        <div class="alert" id="alert" hidden="hidden"></div>
         <form >
 
             <div class="form-group">
@@ -117,7 +117,7 @@
                 <div class="col-lg-4">
                     <div class="form-group">
                         <label for="userAge">年龄</label>
-                        <input type="text" class="form-control" id="userAge" placeholder="暂无信息" style="width: 200px" th:value="${user.uAge}">
+                        <input type="number" class="form-control" id="userAge" placeholder="暂无信息" style="width: 200px" th:value="${user.uAge}">
                     </div>
                 </div>
 
@@ -135,6 +135,8 @@
                 </select>
             </div>
                 </div>
+
+
                 <div class="col-lg-3">
             <div class="form-group">
                 <label for="uStatus">个人学历</label>
@@ -147,6 +149,19 @@
                 <option value="博士">博士</option>
             </select>
             </div>
+                </div>
+
+                <div class="col-lg-3">
+                    <div class="form-group">
+                        <label for="uJob">求职意向</label>
+                        <input type="text" class="form-control" id="uJob" placeholder="暂无信息" style="width: 200px" th:value="${user.uJob}">
+                    </div>
+                </div>
+                <div class="col-lg-2">
+                    <div class="form-group">
+                        <label for="uSalary">期望薪资</label>
+                        <input type="text" class="form-control" id="uSalary" placeholder="如：3K" style="width: 200px" th:value="${user.uSalary}">
+                    </div>
                 </div>
             </div>
 
@@ -220,6 +235,7 @@
     })
 
     $("#userupdata").click(function () {
+
         var usertruename = $("#trueName").val()
         var usertel = $("#userTel").val()
         var userage = $("#userAge").val()
@@ -227,13 +243,16 @@
         var userstatus = $("#uStatus option:selected").val()
         var usercity = $("#uCity option:selected").val()
         var useranme = $("#username").attr("value")
+        var uJob = $("#uJob").val()
+        var uSalary = $("#uSalary").val()
         $.ajax({
             url:'/user/updatauser',
-            data:{'uName':useranme,'uTrueName':usertruename,'uTel':usertel,'uAge':userage,'uSex':usersex,'uStatus':userstatus,'uCity':usercity},
+            data:{'uName':useranme,'uTrueName':usertruename,'uTel':usertel,'uAge':userage,'uSex':usersex,'uStatus':userstatus,'uCity':usercity,'uJob':uJob,'uSalary':uSalary},
             type:'post',
             datatype:'json',
             success:function (data) {
-                window.location.reload()
+                //window.location.reload()
+                $("#alert").html("修改成功！！").addClass("alert-success").show().delay(1000).fadeOut();
             }
         })
 

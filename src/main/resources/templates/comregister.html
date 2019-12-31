@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>注册</title>
+    <link href="/static/js/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/static/css/jquery.searchableSelect.css" rel="stylesheet">
+    <script src="/static/js/jquery-3.4.1.min.js"></script>
+    <script src="/static/js/bootstrap/js/bootstrap.js"></script>
+    <script src="/static/js/jquery.searchableSelect.js"></script>
+</head>
+<body style="background-color: white">
+<div class="container" style="width: 40%;margin-top: 10%;border: solid 1px;height: 500px;background-color: #ffe462" id="user">
+    <div class="form-group">
+    </div>
+    <div>
+        <h3 style="float: left">推荐系统-公司注册</h3>
+    </div>
+    <br>
+    <br>
+    <br>
+    <br>
+    <form>
+        <div class="form-group">
+
+            <div class="row">
+                <div class="col-lg-4">
+                <label for="userName">企业名:</label>
+                <input type="text" class="form-control" id="userName" placeholder="ComName">
+                </div>
+
+
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        <label for="ctype">企业类型:</label>
+                        <select id="ctype">
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col-lg-3    ">
+                    <div class="form-group">
+                        <label for="city">所在城市:</label>
+                        <select id="city">
+                        </select>
+                    </div>
+                </div>
+        </div>
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        <label for="userPwd">企业密码:</label>
+                        <input type="password" class="form-control" id="userPwd" placeholder="Password">
+                     </div>
+                </div>
+
+
+            </div>
+
+
+        <div class="form-group">
+            <label for="cuserPwd">确认密码:</label>
+            <input type="password" class="form-control" id="cuserPwd" placeholder="ConfirmPassword" style="width: 25%">
+        </div>
+
+
+        </div>
+
+
+        <span id="msg" th:text="${msg}" style="color: red"></span>
+        <br>
+        <br>
+        <button type="button" id="reg" class="btn btn-primary" >注册账号</button>
+        <a th:href="@{/login}" class="btn btn-success">已有账号，前去登录</a>
+    </form>
+</div>
+
+<div class="container" style="width: 30%;margin-top: 5%" id="company" hidden>
+    haha
+</div>
+<script>
+   var ctype = ['电子商务','游戏', '媒体 ','广告营销','数据服务', '医疗健康', '生活服务', 'O2O', '旅游' ,'分类信息', '音乐/视频/阅读' ,'在线教育' ,'社交网络',
+        '人力资源服务', '企业服务' ,'信息安全' ,'智能硬件', '移动互联网', '互联网' ,'计算机软件', '通信/网络设备', '广告/公关/会展', '互联网金融' ,'物流/仓储' ,'贸易/进出口',
+        '咨询' ,'工程施工' ,'汽车生产'];
+   var str = ''
+   for(var i=0;i<ctype.length;i++){
+       str += '<option value='+ctype[i]+'>'+ctype[i]+'</option>'
+   }
+   $("#ctype").append(str)
+
+   $(function(){
+       $("#ctype").searchableSelect();
+   });
+   var city = ['北京','上海','天津','重庆','长沙','长春','成都','福州','广州','贵阳','呼和浩特','哈尔滨','合肥','杭州','海口','济南','昆明','拉萨','兰州','南宁','南京','南昌','沈阳','石家庄','太原','乌鲁木齐南','武汉','西宁','西安','银川','郑州','深圳','厦门']
+   var str = ''
+   for(var i=0;i<city.length;i++){
+       str += '<option value='+city[i]+'>'+city[i]+'</option>'
+   }
+   $("#city").append(str)
+   $(function(){
+       $("#city").searchableSelect();
+   });
+
+    //锁定
+    $("#userName").focus()
+    //清空提示
+    $("#userName").focus(function () {
+        $("#msg").html("");
+    })
+
+    //判断账号是否存在
+    $("#userName").blur(function () {
+        var userName = $("#userName").val();
+        $.ajax({
+            url:"/com/exist?cName="+userName,
+            type:"post",
+            dataType:"json",
+            success:function (data) {
+                console.log(data)
+                if(data==false){
+                    $("#userName").focus()
+                    $("#msg").html("企业已存在，请重新输入！！");
+                    $("#reg").attr("disabled","disabled");
+                }else{
+                    $("#msg").html("");
+                    $("#reg").removeAttr("disabled")
+                    $("#userPwd").focus()
+                }
+
+            }
+
+        })
+    })
+    //点击注册
+    $("#reg").click(function () {
+
+        var userName = $("#userName").val();
+        var userPwd = $("#userPwd").val();
+        var ctype = $("#ctype option:selected").val()
+        var city = $("#city option:selected").val()
+        if(userName==""||userPwd==""){
+            $("#msg").html("账号或密码不能为空！！");
+            return
+        }
+
+        $.ajax({
+            url:'com/reg',
+            data:{'cName':userName,'cPwd':userPwd,'cType':ctype,'cCity':city},
+            type:'post',
+            dataType:'json',
+            success:function (data) {
+                console.log(data)
+                window.location.href = "/comregsucess";
+            }
+        })
+
+
+    })
+
+    //判断密码是否一致
+    $("#userPwd").blur(function () {
+        var userPwd = $("#userPwd").val();
+        var cuserPwd = $("#cuserPwd").val();
+        if(userPwd!=cuserPwd){
+            $("#msg").html("两次密码不一致！！");
+            $("#reg").attr("disabled","disabled");
+
+        }
+        if(userPwd==cuserPwd){
+            $("#msg").html("");
+            $("#reg").removeAttr("disabled")
+        }
+    })
+    //判断密码是否一致
+    $("#cuserPwd").blur(function () {
+        var userPwd = $("#userPwd").val();
+        var cuserPwd = $("#cuserPwd").val();
+        if(userPwd!=cuserPwd){
+            $("#msg").html("两次密码不一致！！");
+            $("#reg").attr("disabled","disabled");
+
+        }
+        if(userPwd==cuserPwd){
+            $("#msg").html("");
+            $("#reg").removeAttr("disabled")
+        }
+    })
+
+
+</script>
+</body>
+</html>

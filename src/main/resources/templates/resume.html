@@ -14,6 +14,7 @@
             margin-left: 60px;
             font-style: normal;
             color: dimgray;
+            width: 100px;
 
         }
 
@@ -57,8 +58,8 @@
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" th:text="|用户名：${user.uName}|"> <span class="caret"></span></a>
                             <ul class="dropdown-menu">
                                 <li><a th:href="@{/user/updata}">个人信息维护</a></li>
-                                <li><a href="#">简历维护</a></li>
-                                <li><a href="#">我的消息</a></li>
+                                <li><a th:href="@{/user/resume}"    >简历维护</a></li>
+                                <li><a th:href="@{/user/usersends}" >我的消息</a></li>
                                 <li role="separator" class="divider"></li>
                                 <li><a th:href="@{/user/logout}">退出登录</a></li>
                             </ul>
@@ -72,15 +73,15 @@
     <hr>
 
 
-    <div class="container" style="width: 70%;margin-top: 20px;border:solid 2px">
+    <div class="container" style="width: 65%;margin-top: 20px;border:solid 2px">
 
         <form >
             <div class="row">
                 <div class="col-lg-8">
                      <div class="form-group" style="margin-top: 60px;margin-left: 100px">
                          <h1 th:text="${user.uTrueName}"></h1>
-                         <h4 style="margin-left: 90px;font-weight: 1000;margin-top: 20px">求职意向:</h4>
-                         <h4 style="margin-left: 90px;font-weight: 1000">期望薪资:</h4>
+                         <h4 style="margin-left: 90px;font-weight: 1000;margin-top: 20px" th:text="|求职意向:${user.uJob}|"></h4>
+                         <h4 style="margin-left: 90px;font-weight: 1000" th:text="|期望薪资:${user.uSalary}|"></h4>
                     </div>
                 </div>
 
@@ -138,69 +139,45 @@
                 <div class="col-lg-2" >
                     <h4 class="tit">专业技能</h4>
                 </div>
-                <div class="col-lg-6" >
-                <span>良好的Java基础，熟悉常用的数据结构，熟悉Web编程<br>
-                      掌握SSM、SpringBoot等技术框架下的Web开发<br>
-                      熟悉使用CSS、Bootstrap、JavaScript、Ajax和Jquery等前端技术框架<br>
-                      了解Maven、Git版本控制工具，Postman测试工具<br>
-                      了解Mysql，Redis数据库，会编写简单的SQL语句<br>
-                      熟悉应用服务器Tomcat，了解Nginx</span>
+                <div class="col-lg-8" >
+                <h5 id="skillc"  th:value="${user.uSkill}" th:text="${user.uSkill}"></h5>
                 </div>
-                <div class="col-lg-2" id="cs" hidden="hidden">
-                    <button type="button" class="btn btn-danger btn-lg" data-toggle="modal" data-target="#myModal">
-                        修改技能
-                    </button>
 
-                </div>
             </div>
 
             <hr style="height:1px;border:none;border-top:1px dashed;">
             <div class="row" id="exp">
                 <div class="col-lg-2" >
                     <h4 class="tit">项目经历</h4>
-                </div>
-                <div class="col-lg-6" >
-                <span>良好的Java基础，熟悉常用的数据结构，熟悉Web编程<br>
-                      掌握SSM、SpringBoot等技术框架下的Web开发<br>
-                      熟悉使用CSS、Bootstrap、JavaScript、Ajax和Jquery等前端技术框架<br>
-                      了解Maven、Git版本控制工具，Postman测试工具<br>
-                      了解Mysql，Redis数据库，会编写简单的SQL语句<br>
-                      熟悉应用服务器Tomcat，了解Nginx</span>
-                </div>
-                <div class="col-lg-2" id="ce" hidden="hidden">
-                    <button type="button" class="btn btn-danger btn-lg" data-toggle="modal" data-target="#myModal">
-                        修改技能
-                    </button>
 
                 </div>
+                <div class="col-lg-8" >
+                    <span id="expc"  th:value="${user.uExp}" th:text="${user.uExp}">
+                    </span>
+                </div>
+
             </div>
 
 
 
             <hr style="height:1px;border:none;border-top:1px dashed;">
-            <div class="row" id="exp">
+            <div class="row" id="eva">
                 <div class="col-lg-2" >
                     <h4 class="tit">自我评价</h4>
                 </div>
-                <div class="col-lg-6" >
-                <span>良好的Java基础，熟悉常用的数据结构，熟悉Web编程<br>
-                      掌握SSM、SpringBoot等技术框架下的Web开发<br>
-                      熟悉使用CSS、Bootstrap、JavaScript、Ajax和Jquery等前端技术框架<br>
-                      了解Maven、Git版本控制工具，Postman测试工具<br>
-                      了解Mysql，Redis数据库，会编写简单的SQL语句<br>
-                      熟悉应用服务器Tomcat，了解Nginx</span>
+                <div class="col-lg-8"  >
+                    <span id="evac"  th:value="${user.uEva}" th:text="${user.uEva}">
+                    </span>
                 </div>
-                <div class="col-lg-2" id="ce" hidden="hidden">
-                    <button type="button" class="btn btn-danger btn-lg" data-toggle="modal" data-target="#myModal">
-                        修改技能
-                    </button>
 
-                </div>
             </div>
 
             <hr  style="height:3px;border:none;border-top:3px double;margin-top: 30px">
 
         </form>
+
+
+
 
         <!-- Button trigger modal -->
 
@@ -210,26 +187,68 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+                        <h4 class="modal-title" id="myModalLabel"><strong>简历修改</strong><h6 style="color: red">如需换行请手动输如br标签！！</h6></h4>
                     </div>
                     <div class="modal-body">
-                        ...
+                        <strong>专业技能</strong>
+                       <textarea  rows="10" cols="70" id="skilltext">
+                           <th:block  th:text="${user.uSkill}"></th:block>
+                       </textarea>
+                        <br>
+                        <strong>项目经历</strong>
+                        <textarea  rows="15" cols="70" id="exptext">
+                           <th:block  th:text="${user.uExp}"></th:block>
+                       </textarea>
+                        <br>
+                        <strong>自我评价</strong>
+                        <textarea  rows="5" cols="70" id="evatext">
+                           <th:block  th:text="${user.uEva}"></th:block>
+                       </textarea>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Save changes</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                        <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="skill()">确认保存</button>
                     </div>
                 </div>
             </div>
         </div>
 
-
     </div>
+    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#myModal" style="float: right">
+        点击修改
+    </button>
+
 </div>
 <script>
-$("#skill").click(function () {
-    $("#cs").show()
-})
+    var userskill = $("#skillc").attr('value')
+    $("#skillc").html(userskill)
+
+    var userexp = $("#expc").attr('value')
+    $("#expc").html(userexp)
+    var uName = $("#username").attr("value")
+    console.log(uName)
+
+
+
+function skill() {
+    var uName = $("#username").attr('value');
+    console.log(uName)
+    var skilltext =  $("#skilltext").val();
+    console.log(skilltext)
+    var exptext = $("#exptext").val();
+    var evatext = $("#evatext").val();
+    $.ajax({
+        url:"/user/updataskill",
+        data:{"uName":uName,"uExp":exptext,"uSkill":skilltext,"uEva":evatext},
+        dataType:"json",
+        type:"post",
+        success:function (data) {
+            window.location.reload()
+        }
+    })
+}
+
+
 </script>
 </body>
 </html>

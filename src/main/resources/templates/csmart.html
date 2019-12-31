@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>推荐系统</title>
+    <script src="/static/js/jquery-3.4.1.min.js"></script>
+    <link href="/static/js/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/static/css/jquery.searchableSelect.css" rel="stylesheet">
+    <script src="/static/js/bootstrap/js/bootstrap.js"></script>
+    <script src="/static/js/jquery.searchableSelect.js"></script>
+</head>
+<body >
+<div class="container" style="width:90%;margin-top: 20px">
+    <div class="row">
+        <div class="col-lg-3"><h4><strong>企业名称：<span id="cName" th:value="${com.cName}" th:text="${com.cName}"></span></strong></h4></div>
+        <div class="col-lg-2"><h4><small><span th:text="|企业类型：${com.cType}|"></span></small></h4></div>
+        <div class="col-lg-2"><h4><small><span th:text="|所在城市：${com.cCity}|"></span></small></h4></div>
+    </div>
+    <br>
+    <span><strong style="color: red">根据在招职位，系统为企业推荐如下人才：</strong></span>
+    <hr>
+    <div class="container" style="width: 80%;margin-left: 0px">
+        <div class="alert" id="alert" hidden="hidden"></div>
+        <div class="row">
+
+            <div class="col-lg-8">
+                <table class="table table">
+                    <tr>
+                        <td>推荐人才</td>
+                        <td>学历</td>
+                        <td>性别</td>
+                        <td>工资需求</td>
+                    </tr>
+                    <tr th:each="user,iterStat:${user}">
+                        <span th:index="${iterStat.index+1}"  hidden="hidden" th:uid="${user.uId}" th:uTrueName="${user.uTrueName}" th:uStatus="${user.uStatus}" th:uTel="${user.uTel}"></span>
+                        <td th:text="${user.uTrueName}"></td>
+                        <td th:text="${user.uStatus}"></td>
+                        <td th:text="${user.uSex}"></td>
+                        <td th:text="${user.uSalary}"></td>
+                        <td><a  target="main" class="btn btn-primary" href="/com/invite"  >岗位管理</a></td></td>
+                        <td>
+
+                        </td>
+
+
+                    </tr>
+                </table>
+
+            </div>
+
+            <div class="col-lg-3">
+                <table class="table table">
+                    <tr>
+                        <td>操作</td>
+                        <td>岗位</td>
+                    </tr>
+                    <tr th:each="invites,iterStat:${invites}">
+
+                        <td th:text="${invites.iName}"></td>
+                        <td>
+                            <a  class="btn btn-info" th:index1="${iterStat.index+1}"
+                                th:iId="${invites.iId}" th:cId="${invites.cId}" th:iName="${invites.iName}" th:iMoney="${invites.iMoney}" th:cName="${invites.cName}"
+                            >发送面试请求</a>
+
+
+                    </tr>
+                </table>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+</div>
+<script>
+    $("a[class='btn btn-info']").click(function () {
+        var iId = $(this).attr('iId');
+        var cId = $(this).attr('cId');
+        var iName = $(this).attr('iName');
+        var iMoney = $(this).attr('iMoney');
+        var cName = $(this).attr('cName');
+        var index1 = $(this).attr('index1');
+
+
+       var uId = $("span[index="+index1+"]").attr("uId");
+        var uTrueName =$("span[index="+index1+"]").attr('uTrueName');
+        var uStatus = $("span[index="+index1+"]").attr('uStatus');
+        var uTel =$("span[index="+index1+"]").attr('uTel');
+       console.log(uId)
+
+
+        console.log(uTrueName)
+        // console.log(cName)
+        $.ajax({
+            url:"/com/addsend2",
+            data:{"iId":iId,"uId":uId,"cId":cId,"iName":iName,"iMoney":iMoney,"cName":cName,"uTrueName":uTrueName,"uStatus":uStatus,"uTel":uTel},
+            dataType:'json',
+            type:'post',
+            success:function (data) {
+                console.log(data)
+            }
+        })
+    })
+
+</script>
+</body>
+</html>

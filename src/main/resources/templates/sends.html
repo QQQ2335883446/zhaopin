@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>推荐系统</title>
+    <link href="/static/js/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/static/css/jquery.searchableSelect.css" rel="stylesheet">
+    <script src="/static/js/jquery-3.4.1.min.js"></script>
+    <script src="/static/js/bootstrap/js/bootstrap.js"></script>
+    <script src="/static/js/jquery.searchableSelect.js"></script>
+    <style>
+        .tr{
+
+        }
+        .red{
+            background-color: red;
+        }
+    </style>
+</head>
+<body >
+<div class="container" style="width:80%;margin-top: 20px">
+    <div>
+        <h1>就业推荐系统<small>
+            简历投递信息详情</small></h1> <h6  id="username" th:value="${user.uName}" th:text="|在线用户：${user.uName}|"></h6>
+        <hr>
+        <nav class="navbar navbar-default">
+            <div class="container-fluid">
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="/user/index">首页</a>
+                </div>
+
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav">
+
+
+
+                    </ul>
+                    <form class="navbar-form navbar-left">
+                        <div class="form-group">
+                            <h5 style="color: red">已投递简历详细信息！！</h5>
+                        </div>
+
+                    </form>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a href="#">Link</a></li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" th:text="|用户名：${user.uName}|"> <span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li><a th:href="@{/user/updata}">个人信息维护</a></li>
+                                <li><a th:href="@{/user/resume}">简历维护</a></li>
+                                <li><a th:href="@{/user/usersends}">我的消息</a></li>
+                                <li role="separator" class="divider"></li>
+                                <li><a th:href="@{/user/logout}">退出登录</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div><!-- /.navbar-collapse -->
+            </div><!-- /.container-fluid -->
+        </nav>
+    </div>
+
+    <hr>
+
+    <div class="container" style="width: 60%;margin-top: 20px;margin-left: 15%">
+        <div class="alert" id="alert" hidden="hidden"></div>
+        <table class="table table">
+            <tr>
+                <td>公司</td>
+                <td>职位</td>
+                <td>薪资</td>
+                <td>时间</td>
+                <td>状态</td>
+                <td>操作</td>
+            </tr>
+            <tr th:each="sends,iterStat:${sends}">
+                <td th:text="${sends.cName}"></td>
+                <td th:text="${sends.iName}"></td>
+                <td th:text="${sends.iMoney}"></td>
+                <td th:text="${sends.sTime}"></td>
+                <td th:switch="${sends.sStatus}">
+                    <span th:case="已投递" style="color: #162bff">投递成功</span>
+                    <span th:case="拒绝" style="color: red">企业拒绝</span>
+                    <span th:case="接受" style="color: #ffbb00">企业对你有意，<br>请尽快联系</span>
+                </td>
+                <td>
+                    <button  class="btn"  th:value="${sends.iId}" th:data="${sends.cId}">查看详情</button>
+                    <button id="drop" class="btn btn-danger" th:sId="${sends.sId}">放弃</button> </td>
+
+
+            </tr>
+        </table>
+    </div>
+</div>
+<script>
+
+
+
+    $("button[class='btn']").click(function () {
+        var iId = $(this).attr('value')
+        var cId = $(this).attr('data')
+        window.location.href="/user/invitedetial?iId="+iId+"&cId="+cId;
+    })
+    $("button[class='btn btn-danger']").click(function () {
+       var sId = $(this).attr("sId");
+       $.post("/user/dropsends",{"sId":sId},function (data) {
+           window.location.reload()
+           console.log(data)
+       },'json')
+    })
+       // $("#alert").html("投递成功！！").addClass("alert-warning").show().delay(1000).fadeOut();
+</script>
+</body>
+</html>

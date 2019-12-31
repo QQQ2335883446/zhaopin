@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>推荐系统</title>
+    <script src="/static/js/jquery-3.4.1.min.js"></script>
+    <link href="/static/js/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/static/css/jquery.searchableSelect.css" rel="stylesheet">
+    <script src="/static/js/bootstrap/js/bootstrap.js"></script>
+    <script src="/static/js/jquery.searchableSelect.js"></script>
+    <style>
+        .line-limit-length {
+            max-width: 200px;
+            color: #adadad;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap; //文本不换行，这样超出一行的部分被截取，显示...
+
+
+        }
+    </style>
+</head>
+<body >
+<div class="container" style="width:90%;margin-top: 20px">
+    <div class="row">
+        <div class="col-lg-3"><h4><strong>企业名称：<span th:value="${com.cName}" th:text="${com.cName}" id="cName"></span></strong></h4></div>
+        <div class="col-lg-2"><h4><small><span th:text="|企业类型：${com.cType}|"></span></small></h4></div>
+        <div class="col-lg-2"><h4><small><span th:text="|所在城市：${com.cCity}|"></span></small></h4></div>
+        <div class="col-lg-2"><button class="btn btn-success" id="addinvite" data-toggle="modal" data-target="#myModal">添加职位</button> </div>
+    </div>
+    <span style="color: red">在招职位：</span>
+    <br>
+    <br>
+    <div class="container" style="width: 70%;margin-left: 10px">
+    <table class="table">
+        <tr style="background-color: black;color: #e3e3e3">
+            <td><strong>序号</strong></td>
+            <td><strong>职位</strong></td>
+            <td><strong>薪资</strong></td>
+            <td><strong>学历要求</strong></td>
+            <td><strong>城市</strong></td>
+            <td><strong>职位要求</strong></td>
+            <td><strong>操作</strong></td>
+        </tr>
+        <tr th:each="invite,iterStat:${invites}">
+            <td th:text="${iterStat.index+1}"></td>
+            <td th:text="${invite.iName}"></td>
+            <td th:text="${invite.iMoney}"></td>
+            <td th:text="${invite.iStatus}"></td>
+            <td th:text="${invite.iCity}"></td>
+            <td class="line-limit-length" th:text="${invite.iIntro}"></td>
+            <td><button class="btn btn-danger"  th:value="${invite.iId}" >删除</button>
+                <button class="btn btn-info" style="margin-left: 10px" th:value="${invite.iId}" data-toggle="modal" data-target=".bs-example-modal-lg">修改</button> </td>
+        </tr>
+    </table>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">添加招聘信息</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-lg-3">
+                            <span>职位：</span>
+                            <input class="form-control" id="iName" placeholder="如：java">
+                        </div>
+                        <div class="col-lg-2">
+                            <span>薪资(K)：</span>
+                            <input type="number" class="form-control" value="1" id="iMoney">
+                        </div>
+                        <div class="col-lg-3">
+                            <span>学历：</span>
+                            <select class="form-control" style="border-color: white" id="iStatus">
+                                <option value="初中及以下">初中及以下</option>
+                                <option value="高中">高中</option>
+                                <option value="大专">大专</option>
+                                <option value="本科">本科</option>
+                                <option value="硕士">硕士</option>
+                                <option value="博士">博士</option>
+                            </select>
+                        </div>
+                        <div class="col-lg-3">
+                            <span>城市：</span>
+                            <select id="iCity" class="form-control">
+                            </select>
+                        </div>
+                    </div>
+                  <br>
+                    <span>职位描述：</span><br>
+                    <textarea cols="70" rows="8" id="iIntro">
+
+                    </textarea>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" id="addbtn">确认添加</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <span style="color: red">招聘信息修改</span>
+                    <hr>
+                <div class="row">
+                    <div class="col-lg-3">
+                        <span>职位：</span>
+                        <input class="form-control" id="iName1">
+                    </div>
+                    <div class="col-lg-2">
+                        <span>薪资(K)：</span>
+                        <input type="number" class="form-control" value="1" id="iMoney1">
+                    </div>
+                    <div class="col-lg-3">
+                        <span>学历：</span>
+                        <select class="form-control" style="border-color: white" id="iStatus1">
+                            <option value="初中及以下">初中及以下</option>
+                            <option value="高中">高中</option>
+                            <option value="大专">大专</option>
+                            <option value="本科">本科</option>
+                            <option value="硕士">硕士</option>
+                            <option value="博士">博士</option>
+                        </select>
+                    </div>
+                    <div class="col-lg-3">
+                        <span>城市：</span>
+                        <select id="iCity1" class="form-control">
+                        </select>
+                    </div>
+                </div>
+                <br>
+                <span>职位描述：</span><br>
+                <textarea cols="70" rows="8" id="iIntro1">
+
+                    </textarea>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" id="updatabtn">确认修改</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+<span hidden="hidden" th:value="${com.cId}" id="cId"></span>
+</div>
+<script>
+    var city = ['北京','上海','天津','重庆','长沙','长春','成都','福州','广州','贵阳','呼和浩特','哈尔滨','合肥','杭州','海口','济南','昆明','拉萨','兰州','南宁','南京','南昌','沈阳','石家庄','太原','乌鲁木齐南','武汉','西宁','西安','银川','郑州','深圳','厦门']
+    var str = ''
+    for(var i=0;i<city.length;i++){
+        str += '<option value='+city[i]+'>'+city[i]+'</option>'
+    }
+    $("#iCity").append(str)
+    $("#iCity1").append(str)
+
+    $("button[class='btn btn-danger']").click(function () {
+        console.log(11)
+        var iId = $(this).attr('value');
+        console.log(iId)
+        $.ajax({
+            url:'/com/deleteinvite',
+            dataType:"json",
+            type:'post',
+            data:{"iId":iId},
+            success:function (data) {
+                window.location.reload()
+            }
+        })
+    })
+
+
+    $("button[class='btn btn-info']").click(function () {
+        var iId = $(this).attr('value');
+        $.ajax({
+            url:"/com/useinvite",
+            type:"post",
+            dataType:"json",
+            data:{"iId":iId},
+            success:function (data) {
+                console.log(data)
+                var iMoney = data.iMoney.replace("K","");
+                $("#iName1").attr("value",data.iName);
+                $("#iMoney1").html(iMoney);
+                $("#iIntro1").html(data.iIntro);
+            }
+        })
+
+
+        console.log(iId)
+        $("#updatabtn").click(function () {
+            var iName = $("#iName1").val();
+            var iMoney = $("#iMoney1").val()+'K';
+            console.log(iMoney1)
+            var iStatus = $("#iStatus1 option:selected").val();
+            var iCity = $("#iCity1 option:selected").val();
+            var iIntro = $("#iIntro1").val();
+            console.log(cId);
+            $.ajax({
+                url:'/com/updatainvite',
+                data:{'iName':iName,'iMoney':iMoney,'iStatus':iStatus,'iCity':iCity,'iIntro':iIntro,'iId':iId},
+                type:'post',
+                datatype:'json',
+                success:function () {
+                    window.location.reload()
+                }
+            })
+        })
+
+
+
+    })
+
+    $("#addbtn").click(function () {
+        var cName =  $("#cName").attr('value');
+        var iName = $("#iName").val();
+        var iMoney = $("#iMoney").val()+'K';
+        console.log(iMoney)
+        var iStatus = $("#iStatus option:selected").val();
+        var iCity = $("#iCity option:selected").val();
+        var iIntro = $("#iIntro").val();
+        var cId = $("#cId").attr("value");
+        console.log(cId);
+        $.ajax({
+            url:'/com/addinvite',
+            data:{'iName':iName,'iMoney':iMoney,'iStatus':iStatus,'iCity':iCity,'cId':cId,'iIntro':iIntro,'cName':cName},
+            type:'post',
+            datatype:'json',
+            success:function () {
+                window.location.reload()
+            }
+        })
+     })
+
+
+</script>
+</body>
+</html>

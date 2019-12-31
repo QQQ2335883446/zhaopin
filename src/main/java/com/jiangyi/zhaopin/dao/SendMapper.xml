@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jiangyi.zhaopin.dao.SendMapper">
+
+
+    <select id="selectAllByuId" resultType="com.jiangyi.zhaopin.model.Send">
+        select * from send where UId=#{uId}
+    </select>
+
+    <select id="selectAllBycId" resultType="com.jiangyi.zhaopin.model.Send">
+        select * from send where CId=#{cId}
+    </select>
+
+    <select id="uniq" resultType="java.lang.Integer">
+      select count(*) from send where IId=#{iId} and UId=#{uId}
+    </select>
+
+
+    <insert id="insertsend">
+       INSERT INTO send (UId, `IId`, `CId`, `STime`, `SStatus`,IName,IMoney,CName,UTrueName,UStatus,UTel) VALUES ( #{uId}, #{iId}, #{cId}, #{sTime}, '已投递',#{iName},#{iMoney},#{cName},#{uTrueName},#{uStatus},#{uTel});
+    </insert>
+
+    <insert id="insertsend2">
+        INSERT INTO send (UId, `IId`, `CId`, `STime`, `SStatus`,IName,IMoney,CName,UTrueName,UStatus,UTel) VALUES ( #{uId}, #{iId}, #{cId}, #{sTime}, '接受',#{iName},#{iMoney},#{cName},#{uTrueName},#{uStatus},#{uTel});
+    </insert>
+
+    <delete id="deleteBysId">
+        DELETE FROM  send WHERE SId=#{sId}
+    </delete>
+
+    <delete id="deleteByiId">
+        DELETE FROM  send WHERE IId=#{iId}
+    </delete>
+
+
+    <update id="updatasend">
+        UPDATE send SET SStatus = #{sStatus} WHERE SId=#{sId}
+    </update>
+
+</mapper>

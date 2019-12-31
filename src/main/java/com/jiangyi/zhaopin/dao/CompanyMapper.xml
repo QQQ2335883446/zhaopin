@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jiangyi.zhaopin.dao.CompanyMapper">
+    <select id="selectByNP" resultType="com.jiangyi.zhaopin.model.Company">
+        select * from company where CName=#{cName} and CPwd=#{cPwd}
+    </select>
+
+    <select id="selectAll" resultType="com.jiangyi.zhaopin.model.Company">
+        select * from company where CName=#{cName}
+    </select>
+
+    <select id="selectBycId" resultType="com.jiangyi.zhaopin.model.Company">
+        select * from company where CId=#{cId}
+    </select>
+
+    <insert id="insertCom">
+        INSERT INTO company (`CName`,  `CType`,   `CPwd`,
+         `CCity`,CScale) VALUES ( #{cName},#{cType},#{cPwd},#{cCity},'私营');
+
+    </insert>
+
+    <update id="updataByCName">
+        UPDATE company SET  `CTel`=#{cTel}, `CBName`=#{cbName}, `CIntro`=#{cIntro},  `CAdress`= #{cAdress}, `CScale`=#{cScale} WHERE (`CName`=#{cName});
+    </update>
+</mapper>
